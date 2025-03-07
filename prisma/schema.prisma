@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model WorkItem {
+  id            Int         @id @default(autoincrement())
+  company       String
+  position      String
+  website       String?
+  startDate     String
+  endDate       String?
+  summary       String?
+  thumbnail_url String?
+  highlights    Highlight[]
+
+  @@unique([company, position, startDate])
+}
+
+model Highlight {
+  id          Int      @id @default(autoincrement())
+  description String
+  workItemId  Int
+  workItem    WorkItem @relation(fields: [workItemId], references: [id])
+}
+
+model EducationItem {
+  id          Int      @id @default(autoincrement())
+  institution String
+  area        String
+  studyType   String
+  startDate   String
+  endDate     String? // Optional fields added for completeness
+  gpa         String? // Optional fields added for completeness
+  courses     Course[]
+
+  @@unique([institution, area, studyType, startDate])
+}
+
+model Course {
+  id              Int           @id @default(autoincrement())
+  educationItemId Int
+  name            String
+  description     String
+  educationItem   EducationItem @relation(fields: [educationItemId], references: [id])
+}
