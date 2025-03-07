@@ -9,6 +9,10 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  preview: {
+    port: 4173,
+    allowedHosts: ['regular-alysa-bearhub-6aeaa056.koyeb.app'],
+  },
   build: {
     target: 'esnext',
   },
