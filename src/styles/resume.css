@@ -1,0 +1,260 @@
+/* Resume Layout */
+.resume-container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+}
+
+.resume-layout {
+  display: flex;
+}
+
+/* Sidebar */
+.resume-sidebar {
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  padding: 2.5rem 1.5rem;
+  border-right: 1px solid rgba(184, 176, 141, 0.2);
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.toc-container {
+  position: sticky;
+  top: 2.5rem;
+}
+
+/* Main Content */
+.resume-content {
+  flex: 1;
+  margin-left: 280px; /* Match sidebar width */
+  padding: 0 30px; /* Add consistent padding on both sides */
+}
+
+.resume-wrapper {
+  width: 100%;
+  max-width: 1200px; /* Increased to allow for more width */
+  margin: 0 auto;
+  padding: 3rem 0; /* Remove horizontal padding since it's handled by resume-content */
+}
+
+/* Cards & Sections */
+.resume-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  position: relative;
+  scroll-margin-top: 1.5rem;
+}
+
+.resume-card:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: #F29559;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  opacity: 0.8;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #202C39;
+  margin-bottom: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(184, 176, 141, 0.3);
+}
+
+.resume-items {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.resume-item {
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(184, 176, 141, 0.1);
+  position: relative;
+}
+
+.resume-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Header Section */
+.resume-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #202C39;
+  margin-bottom: 0.5rem;
+}
+
+.resume-title {
+  font-size: 1.5rem;
+  color: #283845;
+  margin-bottom: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(184, 176, 141, 0.3);
+}
+
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  margin-bottom: 2rem;
+  color: #283845;
+}
+
+.contact-label {
+  font-weight: 500;
+}
+
+.profile-links {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.profile-link {
+  color: #F29559;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.profile-link:hover {
+  color: #F2D492;
+}
+
+.summary {
+  color: #283845;
+  line-height: 1.7;
+  font-size: 1.125rem;
+}
+
+/* Item Styles */
+.resume-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .resume-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.item-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #202C39;
+  line-height: 1.4;
+}
+
+.item-date {
+  color: #F29559;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .item-date {
+    text-align: right;
+  }
+}
+
+.company-name, .degree-info {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #283845;
+  margin-bottom: 0.75rem;
+}
+
+.item-summary {
+  color: #283845;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.item-bullets {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  color: #283845;
+  margin-bottom: 1.5rem;
+}
+
+.item-bullets li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+  line-height: 1.5;
+}
+
+.item-bullets li:last-child {
+  margin-bottom: 0;
+}
+
+/* Skills and Tags */
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.skill-tag {
+  background-color: rgba(184, 176, 141, 0.1);
+  color: #283845;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.skill-tag:hover {
+  background-color: rgba(184, 176, 141, 0.2);
+}
+
+/* Course Styles */
+.courses-container {
+  margin-top: 1rem;
+}
+
+.courses-title {
+  font-weight: 500;
+  color: #283845;
+  margin-bottom: 0.75rem;
+}
+
+.gpa {
+  color: #283845;
+  margin-bottom: 0.75rem;
+}
+
+/* Project Links */
+.project-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-link {
+  color: #F29559;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.project-link:hover {
+  color: #F2D492;
+}
+
+.cert-info {
+  color: #283845;
+} 

@@ -1,0 +1,71 @@
+/* TableOfContents styles */
+.toc {
+    position: sticky;
+    top: 2.5rem;
+}
+
+.toc-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #202C39;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(184, 176, 141, 0.3);
+}
+
+.toc-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.toc-item {
+    list-style: none;
+}
+
+.toc-link {
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    color: #283845;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.toc-link:hover {
+    background-color: rgba(184, 176, 141, 0.1);
+    color: #F29559;
+    transform: translateX(0.25rem);
+}
+
+/* .toc-link.active {
+    background-color: rgba(242, 212, 146, 0.2);
+    color: #F29559;
+    font-weight: 500;
+} */
+
+.toc-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(242, 149, 89, 0.3);
+}
+
+/* Hover indicator */
+.toc-link:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #F29559;
+    transform: scaleY(0);
+    transition: transform 0.2s;
+}
+
+.toc-link:hover:before,
+.toc-link:before {
+    transform: scaleY(1);
+} 
