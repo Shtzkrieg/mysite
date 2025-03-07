@@ -11,7 +11,11 @@ export default defineConfig({
   },
   preview: {
     port: 4173,
-    allowedHosts: ['regular-alysa-bearhub-6aeaa056.koyeb.app'],
+    allowedHosts: ['regular-alysa-bearhub-6aeaa056.koyeb.app',
+      'cv.calebbuilds.tech',
+      'calebbuilds.tech',
+      'www.calebbuilds.tech',
+    ],
   },
   build: {
     target: 'esnext',
