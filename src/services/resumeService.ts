@@ -1,5 +1,6 @@
 import { createSignal } from 'solid-js';
 import type { ResumeData } from '../types/resume';
+import { getEducationItems } from '../api/education';
 
 // Configuration for enabled/disabled sections
 export const sectionConfig = {
@@ -7,7 +8,7 @@ export const sectionConfig = {
   experience: true,
   skills: true,
   education: true,
-  projects: false, // Disabled since there's no content
+  projects: false,
   certifications: true,
   volunteering: true
 };
@@ -91,26 +92,7 @@ const sampleResumeData: ResumeData = {
       ]
     }
   ],
-  education: [
-    {
-      institution: "University of Wisconsin-Madison",
-      area: "Economics",
-      studyType: "Bachelor of Arts",
-      startDate: "2015-09",
-      endDate: "2018-12",
-      gpa: "",
-      courses: ["Minor in Development Economics and Econometrics"]
-    },
-    {
-      institution: "MITx",
-      area: "Statistics and Data Science",
-      studyType: "MicroMasters",
-      startDate: "2020",
-      endDate: "2020",
-      gpa: "",
-      courses: []
-    }
-  ],
+  education: [],
   skills: [
     {
       name: "Programming Languages",
@@ -187,16 +169,23 @@ const sampleResumeData: ResumeData = {
 
 // Create a service to manage resume data
 export const createResumeService = () => {
-  const [resumeData, setResumeData] = createSignal<ResumeData>(sampleResumeData);
+  const [resumeData, setResumeData] = createSignal<ResumeData>({
+    ...sampleResumeData,
+    education: [] // Start with empty education array
+  });
 
-  // Function to update resume data (could be used with a form or API)
-  const updateResumeData = (newData: Partial<ResumeData>) => {
-    setResumeData(prev => ({ ...prev, ...newData }));
-  };
+  // Load education data immediately
+  getEducationItems()
+    .then(educationItems => {
+      console.log('Loaded education items:', educationItems);
+      setResumeData(prev => ({ ...prev, education: educationItems }));
+    })
+    .catch(error => {
+      console.error('Failed to load education data:', error);
+    });
 
   return {
-    resumeData,
-    updateResumeData
+    resumeData
   };
 };
 
