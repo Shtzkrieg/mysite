@@ -51,6 +51,5 @@ model Course {
   id              Int           @id @default(autoincrement())
   educationItemId Int
   name            String
-  description     String
   educationItem   EducationItem @relation(fields: [educationItemId], references: [id])
 }
