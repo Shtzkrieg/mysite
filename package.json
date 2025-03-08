@@ -4,24 +4,42 @@
   "description": "A resume website built with SolidJS",
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
+    "start": "bun run serve",
+    "dev": "concurrently \"bun api/index.ts\" \"bun run dev:frontend\"",
+    "dev:frontend": "vite",
+    "dev:api": "bun api/index.ts",
     "build": "vite build",
-    "serve": "vite preview --host 0.0.0.0"
+    "build:all": "bun run build && bun run build:api",
+    "build:api": "bun build api/index.ts --target node --outdir dist/api",
+    "serve": "concurrently \"bun run serve:api\" \"bun run serve:frontend\"",
+    "serve:frontend": "vite preview --host 0.0.0.0",
+    "serve:api": "bun dist/api/index.js",
+    "db:generate:dev": "dotenv -e .env.development.local -- prisma generate",
+    "db:pull:dev": "dotenv -e .env.development.local -- prisma db pull",
+    "postinstall": "bun run db:generate:dev"
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.9",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
     "postcss": "^8.5.3",
+    "prisma": "^6.4.1",
     "tailwindcss": "^4.0.9",
     "typescript": "^5.7.2",
     "vite": "^6.0.0",
     "vite-plugin-solid": "^2.11.6"
   },
   "dependencies": {
-    "@solidjs/router": "^0.10.5",
+    "@prisma/client": "^6.4.1",
+    "@solidjs/router": "^0.15.3",
     "@tailwindcss/postcss": "^4.0.9",
     "@tailwindcss/vite": "^4.0.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "5.0.1",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.5"
   }
