@@ -7,6 +7,7 @@ import '../styles/toc.css';
 
 type TOCProps = {
   sections: { id: string; title: string }[];
+  onSectionClick?: (sectionId: string) => void;
 };
 
 const TableOfContents: Component<TOCProps> = (props) => {
@@ -17,6 +18,7 @@ const TableOfContents: Component<TOCProps> = (props) => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(id);
+      props.onSectionClick?.(`toc_${id}`);
     }
   };
 
