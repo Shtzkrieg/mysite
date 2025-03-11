@@ -9,9 +9,21 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3002',
+        changeOrigin: true
+      }
+    }
   },
   preview: {
     port: 4173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3002',
+        changeOrigin: true
+      }
+    },
     allowedHosts: ['regular-alysa-bearhub-6aeaa056.koyeb.app',
       'cv.calebbuilds.tech',
       'calebbuilds.tech',

@@ -1,8 +1,9 @@
 import type { Education } from '../types/resume';
+import { API_URL } from '../config';
 
 export async function getEducationItems(): Promise<Education[]> {
   try {
-    const response = await fetch('http://localhost:3002/api/education');
+    const response = await fetch(`${API_URL}/education`);
     if (!response.ok) {
       throw new Error('Failed to fetch education data');
     }
