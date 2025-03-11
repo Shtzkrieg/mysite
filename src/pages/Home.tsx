@@ -3,7 +3,12 @@ import { resumeService, sectionConfig } from '../services/resumeService';
 import TableOfContents from '../components/TableOfContents';
 import '../styles/resume.css';
 
-const Home: Component = () => {
+interface HomeProps {
+  sessionId: string | null;
+  handleClick: (elementId: string) => void;
+}
+
+const Home: Component<HomeProps> = (props) => {
   console.log('Home component rendering');
   const { resumeData } = resumeService;
   
@@ -43,7 +48,10 @@ const Home: Component = () => {
           {/* Sidebar */}
           <div class="resume-sidebar">
             <div class="toc-container">
-              <TableOfContents sections={sections} />
+              <TableOfContents 
+                sections={sections} 
+                onSectionClick={props.handleClick}
+              />
             </div>
           </div>
 
@@ -52,7 +60,7 @@ const Home: Component = () => {
             <div class="resume-wrapper">
               {/* Header/Intro Section */}
               {sectionConfig.about && (
-                <header id="about" class="resume-card">
+                <header id="about" class="resume-card" onClick={() => props.handleClick('about')}>
                   <h1 class="resume-name">{basics.name}</h1>
                   <h2 class="resume-title">{basics.label}</h2>
                   
@@ -88,7 +96,7 @@ const Home: Component = () => {
               
               {/* Experience Section */}
               {sectionConfig.experience && (
-                <section id="experience" class="resume-card">
+                <section id="experience" class="resume-card" onClick={() => props.handleClick('experience')}>
                   <h2 class="section-title">Work Experience</h2>
                   
                   <div class="resume-items">
@@ -113,7 +121,7 @@ const Home: Component = () => {
               
               {/* Skills Section */}
               {sectionConfig.skills && (
-                <section id="skills" class="resume-card">
+                <section id="skills" class="resume-card" onClick={() => props.handleClick('skills')}>
                   <h2 class="section-title">Skills</h2>
                   
                   <div class="resume-items">
@@ -133,7 +141,7 @@ const Home: Component = () => {
               
               {/* Education Section */}
               {sectionConfig.education && (
-                <section id="education" class="resume-card">
+                <section id="education" class="resume-card" onClick={() => props.handleClick('education')}>
                   <h2 class="section-title">Education</h2>
                   
                   <div class="resume-items">
@@ -167,7 +175,7 @@ const Home: Component = () => {
 
               {/* Projects Section */}
               {sectionConfig.projects && (
-                <section id="projects" class="resume-card">
+                <section id="projects" class="resume-card" onClick={() => props.handleClick('projects')}>
                   <h2 class="section-title">Projects</h2>
                   
                   <div class="resume-items">
@@ -205,7 +213,7 @@ const Home: Component = () => {
               
               {/* Certifications Section */}
               {sectionConfig.certifications && certifications.length > 0 && (
-                <section id="certifications" class="resume-card">
+                <section id="certifications" class="resume-card" onClick={() => props.handleClick('certifications')}>
                   <h2 class="section-title">Certifications</h2>
                   
                   <div class="resume-items">
@@ -227,7 +235,7 @@ const Home: Component = () => {
 
               {/* Volunteering Section */}
               {sectionConfig.volunteering && volunteering.length > 0 && (
-                <section id="volunteering" class="resume-card">
+                <section id="volunteering" class="resume-card" onClick={() => props.handleClick('volunteering')}>
                   <h2 class="section-title">Volunteering</h2>
                   
                   <div class="resume-items">
