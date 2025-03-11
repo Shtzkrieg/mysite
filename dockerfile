@@ -19,13 +19,14 @@ COPY . .
 # Build the application
 RUN bun run build
 
-# Expose the port that Vite will run on
-EXPOSE 4173
-# Expose the API port
+# Expose ports
 EXPOSE 3002
+EXPOSE 4173
 
-# Set host environment variable
+# Set environment variables
 ENV HOST=0.0.0.0
+ENV API_PORT=3002
+ENV PORT=4173
 
 # Start the application
 CMD ["bun", "run", "serve"]
