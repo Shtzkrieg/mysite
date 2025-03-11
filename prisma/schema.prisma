@@ -47,3 +47,20 @@ model Course {
   name            String
   educationItem   EducationItem @relation(fields: [educationItemId], references: [id])
 }
+
+// Session Tracking Models
+
+model Session {
+  sessionId String   @id
+  ip        String
+  timestamp DateTime @default(now())
+  clicks    Click[]
+}
+
+model Click {
+  id        Int      @id @default(autoincrement())
+  sessionId String
+  session   Session  @relation(fields: [sessionId], references: [sessionId])
+  elementId String
+  timestamp DateTime @default(now())
+}
