@@ -10,8 +10,23 @@ import { TrackingService } from './services/TrackingService'
 dotenv.config({ path: '.env.development.local' })
 
 const app = express()
-app.use(cors())
+
+// Configure CORS
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:4173',
+    'https://cv.calebbuilds.tech',
+    'https://www.cv.calebbuilds.tech'
+  ],
+  methods: ['GET', 'POST'],
+  credentials: true
+}))
+
 app.use(json())
+
+// Create router for /api routes
+const apiRouter = express.Router()
 
 // Initialize services
 const prisma = new PrismaClient({
@@ -40,7 +55,7 @@ const trackingService = new TrackingService(prisma)
 // Data Endpoints
 // ------------------------------------------------------------------------------------------------
 
-app.get('/api/education', async (_req: Request, res: Response): Promise<void> => {
+apiRouter.get('/education', async (_req: Request, res: Response): Promise<void> => {
   try {
     const items = await dataService.getEducation();
     res.json(items);
@@ -63,7 +78,7 @@ interface ClickBody {
   elementId: string;
 }
 
-app.post<{}, {}, SessionBody>('/api/log-session', async (req, res): Promise<void> => {
+apiRouter.post<{}, {}, SessionBody>('/log-session', async (req, res): Promise<void> => {
   const { sessionId } = req.body;
   const ip = req.ip;
   const xForwardedFor = req.headers['x-forwarded-for'];
@@ -87,7 +102,7 @@ app.post<{}, {}, SessionBody>('/api/log-session', async (req, res): Promise<void
   console.log('Session logged:', sessionId, ip);
 });
 
-app.post<{}, {}, ClickBody>('/api/log-click', async (req, res): Promise<void> => {
+apiRouter.post<{}, {}, ClickBody>('/log-click', async (req, res): Promise<void> => {
   const { sessionId, elementId } = req.body;
 
   if (!sessionId || !elementId) {
@@ -107,7 +122,7 @@ app.post<{}, {}, ClickBody>('/api/log-click', async (req, res): Promise<void> =>
 });
 
 // Health check endpoint
-app.get('/health', async (_req: Request, res: Response): Promise<void> => {
+apiRouter.get('/health', async (_req: Request, res: Response): Promise<void> => {
   try {
     // Try to count education items
     const eduCount = await prisma.educationItem.count();
@@ -132,6 +147,9 @@ app.get('/health', async (_req: Request, res: Response): Promise<void> => {
     });
   }
 });
+
+// Mount the API router
+app.use('/api', apiRouter);
 
 // ------------------------------------------------------------------------------------------------
 // Start Server
