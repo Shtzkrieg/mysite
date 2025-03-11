@@ -9,6 +9,11 @@ export class DataService {
         include: { courses: true }
       });
       
+      console.log('Education query result:', {
+        itemCount: items.length,
+        items: items
+      });
+
       return items.map(item => ({
         institution: item.institution,
         area: item.area,
@@ -19,13 +24,7 @@ export class DataService {
         courses: item.courses.map(course => course.name)
       }));
     } catch (error) {
-      console.error('Database error in getEducation:', {
-        error,
-        connectionInfo: {
-          url: process.env.DATABASE_URL?.replace(/:[^:@]+@/, ':****@'), // Hide password
-          nodeEnv: process.env.NODE_ENV
-        }
-      });
+      console.error('Failed to fetch education items:', error);
       throw error;
     }
   }
