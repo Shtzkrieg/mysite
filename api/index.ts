@@ -14,7 +14,25 @@ app.use(cors())
 app.use(json())
 
 // Initialize services
-const prisma = new PrismaClient()
+const prisma = new PrismaClient({
+  log: ['query', 'error', 'warn']
+})
+
+// Test database connection
+prisma.$connect()
+  .then(() => {
+    console.log('Successfully connected to database')
+  })
+  .catch((error) => {
+    console.error('Failed to connect to database:', {
+      error,
+      connectionInfo: {
+        url: process.env.DATABASE_URL?.replace(/:[^:@]+@/, ':****@'), // Hide password
+        nodeEnv: process.env.NODE_ENV
+      }
+    })
+  })
+
 const dataService = new DataService(prisma)
 const trackingService = new TrackingService(prisma)
 
@@ -86,6 +104,27 @@ app.post<{}, {}, ClickBody>('/api/log-click', async (req, res): Promise<void> =>
   }
 
   console.log('Click logged:', sessionId, elementId);
+});
+
+// Health check endpoint
+app.get('/health', async (_req: Request, res: Response): Promise<void> => {
+  try {
+    // Test database connection with a simple query
+    await prisma.$queryRaw`SELECT 1`
+    res.json({ 
+      status: 'healthy',
+      database: 'connected',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Health check failed:', error);
+    res.status(500).json({ 
+      status: 'unhealthy',
+      database: 'disconnected',
+      error: process.env.NODE_ENV === 'development' ? error : 'Database connection failed',
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 // ------------------------------------------------------------------------------------------------
