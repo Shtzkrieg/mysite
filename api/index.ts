@@ -109,19 +109,25 @@ app.post<{}, {}, ClickBody>('/api/log-click', async (req, res): Promise<void> =>
 // Health check endpoint
 app.get('/health', async (_req: Request, res: Response): Promise<void> => {
   try {
-    // Test database connection with a simple query
-    await prisma.$queryRaw`SELECT 1`
+    // Try to count education items
+    const eduCount = await prisma.educationItem.count();
+    const sessionCount = await prisma.session.count();
+    const clickCount = await prisma.click.count();
+    
     res.json({ 
       status: 'healthy',
-      database: 'connected',
+      counts: {
+        education: eduCount,
+        sessions: sessionCount,
+        clicks: clickCount
+      },
       timestamp: new Date().toISOString()
     });
   } catch (error) {
     console.error('Health check failed:', error);
     res.status(500).json({ 
       status: 'unhealthy',
-      database: 'disconnected',
-      error: process.env.NODE_ENV === 'development' ? error : 'Database connection failed',
+      error: 'Database operation failed',
       timestamp: new Date().toISOString()
     });
   }
