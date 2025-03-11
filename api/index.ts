@@ -92,7 +92,7 @@ app.post<{}, {}, ClickBody>('/api/log-click', async (req, res): Promise<void> =>
 // Start Server
 // ------------------------------------------------------------------------------------------------
 
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3002;
-app.listen(PORT, () => {
-  console.log(`API server running on port ${PORT}`);
+const API_PORT = process.env.API_PORT ? parseInt(process.env.API_PORT) : 3002;
+app.listen(API_PORT, () => {
+  console.log(`API server running on port ${API_PORT}`);
 }); 
