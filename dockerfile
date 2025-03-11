@@ -10,9 +10,6 @@ COPY package.json bun.lock ./
 # Copy Prisma schema
 COPY prisma ./prisma/
 
-# Generate Prisma client (without accessing DB)
-RUN bunx prisma generate
-
 # Install dependencies
 RUN bun install
 
