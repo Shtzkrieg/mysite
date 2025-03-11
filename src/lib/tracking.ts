@@ -2,7 +2,7 @@
 // Tracking
 // ------------------------------------------------------------------------------------------------
 
-const API_URL = 'http://localhost:3002/api';
+import { API_URL } from '../config';
 
 export async function initSession(sessionId: string): Promise<void> {
   const response = await fetch(`${API_URL}/log-session`, {
