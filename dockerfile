@@ -27,6 +27,10 @@ EXPOSE 4173
 ENV HOST=0.0.0.0
 ENV API_PORT=3002
 ENV PORT=4173
+ENV NODE_ENV=production
+
+# Verify Prisma can access the schema
+RUN bunx prisma generate
 
 # Start the application
 CMD ["bun", "run", "serve"]
